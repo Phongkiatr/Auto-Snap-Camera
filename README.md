@@ -1,2 +1,2 @@
-# Auto-Snap-Camera
+# Project Machine Learning
 Auto Snap Camere Using CNN
