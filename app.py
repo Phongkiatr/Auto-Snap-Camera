@@ -39,21 +39,20 @@ def capture_and_predict(cap, stop_event):
                     cv2.putText(frame, predicted_emotion, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
 
                 if predicted_emotion == 'happy' and last_predicted_emotion != 'happy':
-                    countdown = 3
+                    countdown = 1
                     countdown_start_time = time.time()
 
                 if countdown > 0:
                     elapsed_time = time.time() - countdown_start_time
                     remaining_time = int(countdown - elapsed_time)
 
-                    if remaining_time > 0:
-                        cv2.putText(frame, f'Capturing in {remaining_time}...', (x, y-40), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-                    elif remaining_time <= 0:
-                        image_counter += 1
-                        image_filename = f'statics/images/happy_{image_counter}.jpg'
-                        cv2.imwrite(image_filename, frame)
-                        print(f'Image saved as {image_filename}')
-                        countdown = -1
+                    if remaining_time <= 0:
+                        if image_counter < 3:
+                            image_counter += 1
+                            image_filename = f'statics/images/happy_{image_counter}.jpg'
+                            cv2.imwrite(image_filename, frame)
+                            print(f'Image saved as {image_filename}')
+                            countdown = -1
 
                 last_predicted_emotion = predicted_emotion
 
